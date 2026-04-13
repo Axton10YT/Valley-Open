@@ -1,0 +1,5 @@
+node_modules/
+dist/
+bin/llama-server.exe
+src/renderer/app.js.map
+*.log

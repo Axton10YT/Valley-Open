@@ -1,0 +1,48 @@
+{
+  "name": "valley-open",
+  "version": "1.0.0",
+  "description": "Valley Open — Local AI by MeTal Labs",
+  "main": "src/main/main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win --x64",
+    "pack": "electron-builder --dir",
+    "setup": "node scripts/setup.js"
+  },
+  "build": {
+    "appId": "net.metalai.valley-open",
+    "productName": "Valley Open",
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.ico",
+      "requestedExecutionLevel": "requireAdministrator"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "extraResources": [
+      {
+        "from": "bin/",
+        "to": "bin/",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "files": [
+      "src/**/*",
+      "assets/**/*",
+      "node_modules/**/*"
+    ]
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "node-fetch": "^2.7.0",
+    "playwright": "^1.40.0"
+  },
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.0.0"
+  }
+}
