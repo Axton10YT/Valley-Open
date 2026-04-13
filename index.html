@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Valley Open</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Titlebar -->
+  <div class="titlebar">
+    <div class="titlebar-left">
+      <div class="logo-mark">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <rect x="1" y="1" width="8" height="8" fill="var(--accent)"/>
+          <rect x="11" y="1" width="8" height="8" fill="var(--accent)" opacity="0.5"/>
+          <rect x="1" y="11" width="8" height="8" fill="var(--accent)" opacity="0.5"/>
+          <rect x="11" y="11" width="8" height="8" fill="var(--accent)"/>
+        </svg>
+      </div>
+      <span class="titlebar-app-name">Valley Open</span>
+      <span class="titlebar-by">by MeTal Labs</span>
+    </div>
+    <div class="titlebar-controls">
+      <button class="tb-btn" id="btn-minimize" title="Minimize">─</button>
+      <button class="tb-btn" id="btn-maximize" title="Maximize">□</button>
+      <button class="tb-btn danger" id="btn-close" title="Close">✕</button>
+    </div>
+  </div>
+
+  <!-- Layout -->
+  <div class="app-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <nav class="sidebar-nav">
+        <button class="nav-item active" data-page="chat">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <span>Chat</span>
+        </button>
+        <button class="nav-item" data-page="models">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          <span>Models</span>
+        </button>
+        <button class="nav-item" data-page="settings">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          <span>Settings</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-status">
+        <div class="status-pill" id="status-pill">
+          <span class="status-dot"></span>
+          <span id="status-label">No model loaded</span>
+        </div>
+        <div class="agentic-toggle-wrap" id="agentic-wrap" style="display:none">
+          <label class="toggle-label">
+            <input type="checkbox" id="agentic-toggle" />
+            <span class="toggle-track"></span>
+            <span class="toggle-text">Agentic</span>
+          </label>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <main class="main-content">
+      <!-- ── CHAT PAGE ── -->
+      <div class="page active" id="page-chat">
+        <div class="chat-empty" id="chat-empty">
+          <div class="empty-logo">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+              <rect x="2" y="2" width="20" height="20" fill="var(--accent)" opacity="0.9"/>
+              <rect x="26" y="2" width="20" height="20" fill="var(--accent)" opacity="0.4"/>
+              <rect x="2" y="26" width="20" height="20" fill="var(--accent)" opacity="0.4"/>
+              <rect x="26" y="26" width="20" height="20" fill="var(--accent)" opacity="0.9"/>
+            </svg>
+          </div>
+          <h2 class="empty-title">Valley Open</h2>
+          <p class="empty-sub" id="empty-sub">Load a model to start chatting.</p>
+          <button class="btn-primary" id="empty-load-btn">Choose a model</button>
+        </div>
+
+        <div class="chat-messages" id="chat-messages" style="display:none"></div>
+
+        <div class="chat-input-wrap" id="chat-input-wrap" style="display:none">
+          <div class="chat-input-bar">
+            <textarea
+              id="chat-input"
+              placeholder="Message Valley..."
+              rows="1"
+            ></textarea>
+            <button class="send-btn" id="send-btn" disabled>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </button>
+          </div>
+          <div class="chat-meta">
+            <span id="current-model-label">—</span>
+            <span class="chat-meta-sep">·</span>
+            <span>Private · Runs locally</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── MODELS PAGE ── -->
+      <div class="page" id="page-models">
+        <div class="page-header">
+          <h1>Models</h1>
+          <p>Download and manage Valley Open models. All models run entirely on your device.</p>
+        </div>
+        <div class="models-grid" id="models-grid">
+          <!-- populated by JS -->
+        </div>
+      </div>
+
+      <!-- ── SETTINGS PAGE ── -->
+      <div class="page" id="page-settings">
+        <div class="page-header">
+          <h1>Settings</h1>
+        </div>
+        <div class="settings-body">
+          <div class="setting-section">
+            <h3>Agentic Mode</h3>
+            <p class="setting-desc">Allows Valley to run PowerShell commands, open files, browse the web, and read/write files on your behalf. Requires admin privileges.</p>
+            <div class="admin-status" id="admin-status-box">
+              <span id="admin-status-icon">—</span>
+              <span id="admin-status-text">Checking...</span>
+            </div>
+          </div>
+
+          <div class="setting-section">
+            <h3>Runtime</h3>
+            <p class="setting-desc">Tune model behavior and hardware execution. Changes apply the next time you load a model.</p>
+            <div class="settings-grid">
+              <label class="setting-field">
+                <span>Backend</span>
+                <select id="setting-backend">
+                  <option value="gpu">GPU</option>
+                  <option value="cpu">CPU</option>
+                </select>
+              </label>
+              <label class="setting-field">
+                <span>Temperature</span>
+                <input id="setting-temperature" type="number" min="0" max="2" step="0.1" />
+              </label>
+              <label class="setting-field">
+                <span>Context Size</span>
+                <input id="setting-context-size" type="number" min="512" max="262144" step="256" />
+              </label>
+              <label class="setting-field">
+                <span>Threads</span>
+                <input id="setting-threads" type="number" min="1" max="128" step="1" />
+              </label>
+              <label class="setting-field">
+                <span>Max Tokens</span>
+                <input id="setting-n-predict" type="number" min="64" max="8192" step="64" />
+              </label>
+              <label class="setting-field">
+                <span>GPU Layers (-1 = auto)</span>
+                <input id="setting-gpu-layers" type="number" min="-1" max="999" step="1" />
+              </label>
+            </div>
+            <div class="settings-actions">
+              <button class="btn-run" id="save-runtime-btn">Save Runtime Settings</button>
+              <span class="setting-hint" id="runtime-save-hint">Saved values are used on next model load.</span>
+            </div>
+          </div>
+
+          <div class="setting-section">
+            <h3>Storage</h3>
+            <p class="setting-desc">Models are stored in <code>%AppData%\ValleyOpen\models\</code></p>
+          </div>
+
+          <div class="setting-section">
+            <h3>About</h3>
+            <p class="setting-desc">Valley Open v1.0.0 · Built by MeTal Labs · <a href="https://metalai.net" class="link">metalai.net</a></p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
